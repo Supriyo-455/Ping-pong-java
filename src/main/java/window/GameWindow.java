@@ -30,7 +30,7 @@ public class GameWindow extends JFrame implements Runnable {
 
     private static GameWindow INSTANCE;
 
-    private GameWindow(){
+    public GameWindow(){
         //================= Setting up JFrame=========================
         this.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         this.setTitle(Constants.SCREEN_TITLE);
@@ -43,6 +43,11 @@ public class GameWindow extends JFrame implements Runnable {
         //===============Getting the graphics2d object=============
         this.g2 = (Graphics2D) this.getGraphics();
         //=========================================================
+
+        this.init();
+    }
+
+    public void init(){
 
         //==========players and ball===========
         this.player1 = new Rect(
@@ -93,6 +98,10 @@ public class GameWindow extends JFrame implements Runnable {
         this.leftScoreText = new Text(String.valueOf(this.leftScore), font, Constants.HZ_PADDING/2.5, Constants.VT_PADDING);
         this.rightScoreText = new Text(String.valueOf(this.rightScore), font, Constants.SCREEN_WIDTH-Constants.HZ_PADDING/2, Constants.VT_PADDING);
         //==========================================================
+    }
+
+    public void hardResetGame(){
+        this.init();
     }
 
     public static GameWindow getINSTANCE(){

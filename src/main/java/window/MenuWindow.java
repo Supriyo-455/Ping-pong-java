@@ -17,6 +17,7 @@ public class MenuWindow extends JFrame implements Runnable {
     public ML mouseListener = new ML();
     public Font font, titleFont;
     public Text startGameText, endGameText, gameTitleText;
+    public Thread gameThread;
 
     public MenuWindow() {
         //================= Setting up JFrame=========================
@@ -88,10 +89,12 @@ public class MenuWindow extends JFrame implements Runnable {
     }
 
     private void enterGame() throws InterruptedException {
+        this.dispose();
         GameWindow window = GameWindow.getINSTANCE();
-        Thread t1 = new Thread(window);
-        t1.start();
-        t1.join();
+        window.hardResetGame();
+        gameThread = new Thread(window);
+        gameThread.start();
+        gameThread.join();
     }
 
     public void draw(Graphics g){
@@ -126,5 +129,10 @@ public class MenuWindow extends JFrame implements Runnable {
             }
         }
         //==============================================
+    }
+
+    @Override
+    public void setDefaultCloseOperation(int operation) {
+        super.setDefaultCloseOperation(operation);
     }
 }
