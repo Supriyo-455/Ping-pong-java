@@ -48,7 +48,7 @@ public class MenuWindow extends JFrame implements Runnable {
         //==========================================================
     }
 
-    public void update(double dt){
+    public void update(double dt) throws InterruptedException {
 
         // ================================================
         //    Double buffering for smooth gameplay
@@ -77,6 +77,9 @@ public class MenuWindow extends JFrame implements Runnable {
                         && mouseListener.getMouseY() <= endGameText.y + endGameText.height - endGameText.font.getSize()
         ){
             endGameText.setFontColor(new Color(0xCE7A7A));
+            if(mouseListener.isMousePressed()) {
+                System.exit(0);
+            }
         }else{
             startGameText.setFontColor(Color.WHITE);
             endGameText.setFontColor(Color.WHITE);
@@ -84,10 +87,11 @@ public class MenuWindow extends JFrame implements Runnable {
         //======================================================
     }
 
-    private void enterGame() {
+    private void enterGame() throws InterruptedException {
         GameWindow window = GameWindow.getINSTANCE();
         Thread t1 = new Thread(window);
         t1.start();
+        t1.join();
     }
 
     public void draw(Graphics g){
@@ -115,7 +119,11 @@ public class MenuWindow extends JFrame implements Runnable {
             double deltaTime = time - lastTime;
             lastTime = time;
 
-            update(deltaTime);
+            try {
+                update(deltaTime);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         //==============================================
     }

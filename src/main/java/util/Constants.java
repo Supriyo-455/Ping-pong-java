@@ -13,13 +13,13 @@ public class Constants {
     public static final double PADDLE_HEIGHT = 150;
     public static final Color PADDLE_COLOR_1 = Color.GREEN;
     public static final Color PADDLE_COLOR_2 = Color.RED;
-    public static final double PADDLE_SPEED = 50;
+    public static final double PADDLE_SPEED = 200;
 
     // constants for ball
     public static final double BALL_WIDTH = 20;
     public static final double BALL_HEIGHT = 20;
     public static final Color BALL_COLOR = Color.WHITE;
-    public static final double BALL_SPEED = -50;
+    public static final double BALL_SPEED = -300;
 
     // constants for padding
     public static final double HZ_PADDING = 60;
