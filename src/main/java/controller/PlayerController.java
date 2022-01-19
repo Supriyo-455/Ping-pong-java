@@ -1,16 +1,22 @@
+package controller;
+
+import listeners.KL;
+import shapes.Rect;
+import util.Constants;
+
 import java.awt.event.KeyEvent;
 
 public class PlayerController {
     public Rect rect;
     public final KL keyListener;
 
-    // PlayerController constructor for human player
+    // controller.PlayerController constructor for human player
     public PlayerController(final Rect rect, final KL keyListener){
         this.rect = rect;
         this.keyListener = keyListener;
     }
 
-    // PlayerController constructor for ai player
+    // controller.PlayerController constructor for ai player
     public PlayerController(final Rect rect){
         this.rect = rect;
         this.keyListener = null;

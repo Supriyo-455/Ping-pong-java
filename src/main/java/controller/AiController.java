@@ -1,3 +1,8 @@
+package controller;
+
+import shapes.Circle;
+import entity.Ball;
+
 public class AiController {
     public PlayerController playerController;
     public Ball ball;

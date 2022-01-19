@@ -1,3 +1,9 @@
+package entity;
+
+import shapes.Circle;
+import shapes.Rect;
+import util.Constants;
+
 public class Ball {
     public Circle ellipse;
     public Rect leftPaddle;

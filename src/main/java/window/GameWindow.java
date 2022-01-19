@@ -1,7 +1,19 @@
+package window;
+
+import controller.AiController;
+import controller.PlayerController;
+import listeners.KL;
+import entity.Ball;
+import shapes.Circle;
+import shapes.Rect;
+import util.Constants;
+import util.Text;
+import util.Time;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class Window extends JFrame implements Runnable {
+public class GameWindow extends JFrame implements Runnable {
 
     public Graphics2D g2;
     public KL keyListener = new KL();
@@ -16,10 +28,12 @@ public class Window extends JFrame implements Runnable {
     public Text leftScoreText, rightScoreText;
     public int leftScore, rightScore;
 
-    public Window(){
+    private static GameWindow INSTANCE;
+
+    private GameWindow(){
         //================= Setting up JFrame=========================
         this.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-        this.setTitle("Pong Java");
+        this.setTitle(Constants.SCREEN_TITLE);
         this.setResizable(false);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,7 +75,7 @@ public class Window extends JFrame implements Runnable {
         this.playerController2 = new PlayerController(this.ai);
         //================================================
 
-        //================AI controller===============
+        //================AI controller==================
         this.aiController = new AiController(this.playerController2, this.ball);
         //================================================
 
@@ -75,10 +89,17 @@ public class Window extends JFrame implements Runnable {
         //============= Setting up the font and score ==============
         this.leftScore = 0;
         this.rightScore = 0;
-        this.font = new Font("Times New Romain", Font.PLAIN, 20);
+        this.font = new Font(Constants.FONT, Font.PLAIN, Constants.FONT_SIZE);
         this.leftScoreText = new Text(String.valueOf(this.leftScore), font, Constants.HZ_PADDING/2.5, Constants.VT_PADDING);
         this.rightScoreText = new Text(String.valueOf(this.rightScore), font, Constants.SCREEN_WIDTH-Constants.HZ_PADDING/2, Constants.VT_PADDING);
         //==========================================================
+    }
+
+    public static GameWindow getINSTANCE(){
+        if(INSTANCE == null){
+            INSTANCE = new GameWindow();
+        }
+        return INSTANCE;
     }
 
     public void update(double dt){
@@ -94,7 +115,7 @@ public class Window extends JFrame implements Runnable {
         g2.drawImage(dbImage, 0, 0, this);
         //==================================================
 
-        //=== updating playerController, ai controller, ball =====
+        //=== updating playerController, ai controller, ball ======
         this.playerController.update(dt);
         this.aiController.update(dt);
         this.ball.update(dt);
@@ -130,7 +151,7 @@ public class Window extends JFrame implements Runnable {
         this.player1.draw(g2N);
         this.ai.draw(g2N);
         this.ballEllipse.draw(g2N);
-        //=========================================================
+        //===============================================================
     }
 
     @Override
@@ -143,14 +164,6 @@ public class Window extends JFrame implements Runnable {
             lastTime = time;
 
             update(deltaTime);
-
-//            // halting for 30 millisecond
-//            try {
-//                Thread.sleep(30);
-//            }catch (Exception e){
-//
-//            }
-//            //===========================
         }
         //==============================================
     }
