@@ -18,6 +18,7 @@ public class MenuWindow extends JFrame implements Runnable {
     public Font font, titleFont;
     public Text startGameText, endGameText, gameTitleText;
     public Thread gameThread;
+    public boolean isRunning = true;
 
     public MenuWindow() {
         //================= Setting up JFrame=========================
@@ -69,7 +70,7 @@ public class MenuWindow extends JFrame implements Runnable {
         ){
             startGameText.setFontColor(new Color(0xCE7A7A));
             if(mouseListener.isMousePressed()) {
-                enterGame();
+                Main.changeState(1);
             }
         }else if(
                 mouseListener.getMouseX() >= endGameText.x
@@ -88,15 +89,6 @@ public class MenuWindow extends JFrame implements Runnable {
         //======================================================
     }
 
-    private void enterGame() throws InterruptedException {
-        this.dispose();
-        GameWindow window = GameWindow.getINSTANCE();
-        window.hardResetGame();
-        gameThread = new Thread(window);
-        gameThread.start();
-        gameThread.join();
-    }
-
     public void draw(Graphics g){
         Graphics2D g2N = (Graphics2D) g;
 
@@ -112,12 +104,16 @@ public class MenuWindow extends JFrame implements Runnable {
         //=====================================
     }
 
+    public void stop(){
+        this.dispose();
+        this.isRunning = false;
+    }
 
     @Override
     public void run() {
         //=========Calculating the time spent===========
         double lastTime = 0.0f;
-        while(true){
+        while(isRunning){
             double time = Time.getTime();
             double deltaTime = time - lastTime;
             lastTime = time;
@@ -128,11 +124,7 @@ public class MenuWindow extends JFrame implements Runnable {
                 e.printStackTrace();
             }
         }
+        return;
         //==============================================
-    }
-
-    @Override
-    public void setDefaultCloseOperation(int operation) {
-        super.setDefaultCloseOperation(operation);
     }
 }

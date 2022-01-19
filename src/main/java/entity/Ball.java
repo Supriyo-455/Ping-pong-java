@@ -28,7 +28,7 @@ public class Ball {
             if (
                     this.ellipse.x <= this.leftPaddle.x + this.leftPaddle.width    // x direction check
                             && this.ellipse.x >= this.leftPaddle.x                 // x direction check
-                            && this.ellipse.y >= this.leftPaddle.y                            // y direction check
+                            && this.ellipse.y + this.ellipse.height >= this.leftPaddle.y                            // y direction check
                             && this.ellipse.y <= this.leftPaddle.y + this.leftPaddle.height   // y direction check
             ) {
                 // then bounce the ball
@@ -41,7 +41,7 @@ public class Ball {
             if (
                     this.ellipse.x + this.ellipse.width >= this.rightPaddle.x    // x direction check
                             && this.ellipse.x <= this.rightPaddle.x + this.rightPaddle.width   // x direction check
-                            && this.ellipse.y >= this.rightPaddle.y                            // y direction check
+                            && this.ellipse.y + this.ellipse.height >= this.rightPaddle.y                            // y direction check
                             && this.ellipse.y <= this.rightPaddle.y + this.rightPaddle.height   // y direction check
             ) {
                 // then bounce the ball
@@ -54,7 +54,7 @@ public class Ball {
 
         // checks for ball inside screen
         if(this.vy > 0){
-            if(this.ellipse.y + this.ellipse.height > Constants.SCREEN_HEIGHT){
+            if(this.ellipse.y + this.ellipse.height > Constants.SCREEN_HEIGHT - Constants.INSETS_BOTTOM){
                 this.vy *= -1;
             }
         }else if(this.vy < 0){

@@ -12,6 +12,7 @@ import util.Time;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class GameWindow extends JFrame implements Runnable {
 
@@ -27,6 +28,7 @@ public class GameWindow extends JFrame implements Runnable {
     public Font font;
     public Text leftScoreText, rightScoreText;
     public int leftScore, rightScore;
+    public boolean isRunning = true;
 
     private static GameWindow INSTANCE;
 
@@ -141,6 +143,16 @@ public class GameWindow extends JFrame implements Runnable {
         this.rightScoreText.update(String.valueOf(this.rightScore));
         this.leftScoreText.update(String.valueOf(this.leftScore));
         //==================================================================
+
+        if(keyListener.isKeyPressed(KeyEvent.VK_Q)){
+            this.hardResetGame();
+            this.stop();
+            System.out.println("Exit");
+        }
+        if(keyListener.isKeyPressed(KeyEvent.VK_R)){
+            this.hardResetGame();
+            System.out.println("Resetting the game");
+        }
     }
 
     public void draw(Graphics g){
@@ -163,17 +175,24 @@ public class GameWindow extends JFrame implements Runnable {
         //===============================================================
     }
 
+    public void stop(){
+        this.hardResetGame();
+        this.dispose();
+        this.isRunning = false;
+    }
+
     @Override
     public void run() {
         //=========Calculating the time spent===========
         double lastTime = 0.0f;
-        while(true){
+        while(this.isRunning){
             double time = Time.getTime();
             double deltaTime = time - lastTime;
             lastTime = time;
 
             update(deltaTime);
         }
+        return;
         //==============================================
     }
 }
